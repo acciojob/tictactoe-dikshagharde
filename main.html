@@ -2,38 +2,39 @@
 
 <html>
 
+<html lang="en">
 <head>
 	<link rel="stylesheet" href="styles.css">
+    <title>Tic Tac Toe</title>
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 	<!-- the entire body must be written by student -->
-
-	<div class="container">
-        <form>
-            <input type="text" id="player-1" required name="user1" placeholder="Enter Name">
-            <input type="text" id="player-2" required name="user2" placeholder="Enter Name">
-            <input type="submit" value="Start Game">
-        </form>
-        <div id="game-container">
-            <h1>Tic Tac Toe</h1>
-            <div id="message"></div>
-            <div class="grid">
-                <div id="1"></div>
-                <div id="2"></div>
-                <div id="3"></div>
-                <div id="4"></div>
-                <div id="5"></div>
-                <div id="6"></div>
-                <div id="7"></div>
-                <div id="8"></div>
-                <div id="9"></div>
-            </div>
-        </div>
-    </div>
     <script type="text/javascript" src="./script.js">
 </script>
 
+    <div class="container">
+      <div>
+        <h1 class="header">Tic Tac Toe</h1>
+        <div class="message header"></div>
+      </div>
+      <div class="details">
+        <label for="player1">Player 1</label>
+        <input type="text" name="player1" placeholder="enter name" id="player1">
+        <br>
+        <label for="player2">Player 2</label>
+        <input type="text" name="player2" placeholder="enter name" id="player2">
+        <br>
+        <button type="submit" id="submit">Start Game</button>
+      </div>
+      <div class="game">
+      </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 
 </html>
+</html>
+

@@ -1,76 +1,97 @@
 //your JS code here. If required.
 //your JS code here. If required.
-let user1, user2 ;
-        let turn = true ; // 1 or 2
-        let message ; 
-        const form = document.getElementsByTagName("form")[0];
-        const messageElement = document.getElementById("message");
-        const gameContainer = document.getElementById("game-container");
+ //your JS code here. If required.
+// Wait for the DOM to be loaded
+const startButton = document.getElementById("submit");
+const gameBoard = document.querySelector(".game");
+const gameDetails = document.querySelector(".details");
+const gameMessage = document.querySelector(".message");
 
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            user1 = e.target["user1"].value
-            user2 = e.target["user2"].value;
-            message = `${user1}, you're up`;
-            messageElement.innerText = message ;
-            gameContainer.style.display = "block";
-        })
-        const grid = document.getElementsByClassName("grid")[0]
+let player1Name = "";
+let player2Name = "";
+let isPlaying = true;
+let activePlayer = 0;
 
-        function checkIfGameOver(){
-            // [
-            //     [x, x, o], i
-            //     [o, o, x],
-            //     [o, x,  ]
-            // ]
-            let arr = [[], [], []];
-            //          0   1   2
-            console.log(grid.children.length)
-            for(let i = 0 ; i < grid.children.length ; i++){
-                const element = grid.children[i];
-                let id = parseInt(element.id)// 1, 2, 3 ... 9
-                let index = parseInt( (id-1) / 3);
-                // id = 0, 1, 2, 3, 4, 5, 6, 7, 8
-                arr[index].push(element.innerText)
-            }
+function displayMessage(msg) {
+  gameMessage.innerHTML = `<h3>${msg}</h3>`;
+}
 
-            for(let i = 0 ; i < arr.length; i++) {
-                if(arr[i][0] === arr[i][1] && arr[i][1] === arr[i][2]) return true ;
-                if(arr[0][i] === arr[1][i] && arr[1][i] === arr[2][i]) return true ;
-            }
+function switchPlayer() {
+  activePlayer = activePlayer === 0 ? 1 : 0;
+}
 
-            if(arr[0][0] === arr[1][1] && arr[1][1] === arr[2][2]) return true ;
-            if(arr[0][2] === arr[1][1] && arr[1][1] === arr[2][0]) return true ;
-            return false ;
+function initializeGame() {
+  player1Name = document.getElementById("player1").value;
+  player2Name = document.getElementById("player2").value;
+
+  activePlayer = 0;
+
+  gameDetails.style.display = "none";
+  gameBoard.style.display = "flex";
+
+  displayMessage(`${player1Name}, you're up`);
+
+  for (let i = 1; i <= 9; i++) {
+    const slot = document.createElement("div");
+
+    slot.id = i;
+    slot.classList.add("game-slot");
+
+    slot.addEventListener("click", function () {
+
+      if(!slot.innerText && isPlaying){
+        slot.innerText = activePlayer === 0 ? "x" : "o";
+        const winner = checkWinner()
+
+        if(!winner){
+          switchPlayer();
+          displayMessage(`${activePlayer === 0 ? player1Name : player2Name}, you're up`);
+        }else{
+          displayMessage(`${activePlayer===0 ? player1Name : player2Name} congratulations you won!.`);
         }
+      }
+    });
 
-        function onClickCell(e){
-            // write logic of the gam
-            let targetElement = e.target ;
-            if(targetElement.innerText){
-                return ;
-            }
-            if(turn){
-                targetElement.innerText = "X";
-            }
-            else {
-                targetElement.innerText = "O"
-            }
+    gameBoard.appendChild(slot);
+  }
+}
 
-            let isGameOver = checkIfGameOver();
-            if(isGameOver){
-                message = `${turn ? user1 : user2}, congratulations you won`;
-                messageElement.innerText = message ;
-            }
+const winningSequences = [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6]
+];
 
-            turn = !turn;
-            message = `${turn ? user2 : user1}, you're up` ;
-            messageElement.innerText = message; 
-        }
+function checkWinner(){
+    let hasWinner = false;
 
-        for(let i = 0 ; i < 9; i++){
-            let id = (i+1).toString();
-            let gridItem = document.getElementById(id);
+    for(let i=0;i<winningSequences.length;i++){
+      const winningCombo = winningSequences[i];
 
-            gridItem.addEventListener("click", onClickCell)
-        }
+      const cell1 = document.getElementById(winningCombo[0]+1);
+      const cell2 = document.getElementById(winningCombo[1]+1);
+      const cell3 = document.getElementById(winningCombo[2]+1);
+
+      const val1 = cell1.innerText;
+      const val2 = cell2.innerText;
+      const val3 = cell3.innerText;
+
+      if(val1===val2 && val2===val3 && val1!=''){
+        hasWinner = true;
+        isPlaying = false;
+        cell1.style.backgroundColor="purple";
+        cell2.style.backgroundColor="purple";
+        cell3.style.backgroundColor="purple";
+        break;
+      }
+    }
+    return hasWinner;
+}
+
+startButton.addEventListener("click", initializeGame);
+      
