@@ -3,104 +3,81 @@
  //your JS code here. If required.
 // Wait for the DOM to be loaded
 //your JS code here. If required.
-        const container = document.querySelector('.container');
-		const player1Input = document.querySelector('#player-1');
-		const player2Input = document.querySelector('#player-2');
-		const submitBtn = document.querySelector('#submit');
-		const messageDiv = document.createElement('div');
-		messageDiv.classList.add('message');
-		container.appendChild(messageDiv);
-		let player1 = '';
-		let player2 = '';
-		let currentPlayer = '';
-		let gameBoard = ['', '', '', '', '', '', '', '', ''];
-		let gameInProgress = false;
+  //your JS code here. If required.
+let user1, user2 ;
+        let turn = true ; // 1 or 2
+        let message ; 
+        const form = document.getElementsByTagName("form")[0];
+        const messageElement = document.getElementById("message");
+        const gameContainer = document.getElementById("game-container");
 
-		function initializeGame() {
-			player1 = player1Input.value;
-			player2 = player2Input.value;
-			messageDiv.textContent = `${player1}, you're up!`;
-			currentPlayer = player1;
-			gameInProgress = true;
-			gameBoard = ['', '', '', '', '', '', '', '', ''];
-			const cells = document.querySelectorAll('.cell');
-			cells.forEach(cell => {
-				cell.textContent = '';
-				cell.removeEventListener('click', handleCellClick);
-				cell.addEventListener('click', handleCellClick, { once: true });
-			});
-		}
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            user1 = e.target["user1"].value
+            user2 = e.target["user2"].value;
+            message = `${user1}, you're up`;
+            messageElement.innerText = message ;
+            gameContainer.style.display = "block";
+        })
+        const grid = document.getElementsByClassName("grid")[0]
 
-		function handleCellClick(e) {
-			const cell = e.target;
-			const cellIndex = parseInt(cell.id) - 1;
-			gameBoard[cellIndex] = currentPlayer === player1 ? 'X' : 'O';
-			cell.textContent = gameBoard[cellIndex];
-			checkGameStatus();
-			switchPlayer();
-		}
+        function checkIfGameOver(){
+            // [
+            //     [x, x, o], i
+            //     [o, o, x],
+            //     [o, x,  ]
+            // ]
+            let arr = [[], [], []];
+            //          0   1   2
+            console.log(grid.children.length)
+            for(let i = 0 ; i < grid.children.length ; i++){
+                const element = grid.children[i];
+                let id = parseInt(element.id)// 1, 2, 3 ... 9
+                let index = parseInt( (id-1) / 3);
+                // id = 0, 1, 2, 3, 4, 5, 6, 7, 8
+                arr[index].push(element.innerText)
+            }
 
-		function checkGameStatus() {
-			const winningCombinations = [
-				[0, 1, 2],
-				[3, 4, 5],
-				[6, 7, 8],
-				[0, 3, 6],
-				[1, 4, 7],
-				[2, 5, 8],
-				[0, 4, 8],
-				[2, 4, 6]
-			];
-			const gameEnded = gameBoard.every(cell => cell !== '');
-			let winner = null;
-			winningCombinations.forEach(combination => {
-				const [a, b, c] = combination;
-				if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] ===gameBoard[c] && gameBoard[c]{
-					
-				} 
-//				
-let player1Selections = 'x';
-let player2Selections = '0';
-const winningCombinations = [
-  [1, 2, 3],
-  [4, 5, 6],
-  [7, 8, 9],
-  [1, 4, 7],
-  [2, 5, 8],
-  [3, 6, 9],
-  [1, 5, 9],
-  [3, 5, 7],
-];
-const player1Name = document.getElementById("#player-1");
-const player2Name = document.getElementById("#player-2");
-const submitButton = document.getElementById("#submit");
-const board = document.getElementById("#board");
-const message = document.querySelector(".message");
-const cells = document.querySelectorAll(".cell");
+            for(let i = 0 ; i < arr.length; i++) {
+                if(arr[i][0] === arr[i][1] && arr[i][1] === arr[i][2]) return true ;
+                if(arr[0][i] === arr[1][i] && arr[1][i] === arr[2][i]) return true ;
+            }
 
-startGame(){
-submitBtn.addEventListener('click', startGame 
-    const player1Name = document.getElementById('player-1').value;
-    const player2Name = document.getElementById('player-2').value;
-);
-}
-    // Create h1 tag with "Tic Tac Toe" content
-    const h1 = document.createElement('h1');
-    h1.textContent = 'Tic Tac Toe';
-    container.appendChild(h1);
+            if(arr[0][0] === arr[1][1] && arr[1][1] === arr[2][2]) return true ;
+            if(arr[0][2] === arr[1][1] && arr[1][1] === arr[2][0]) return true ;
+            return false ;
+        }
 
-//let currentPlayer = "player1";
+        function onClickCell(e){
+            // write logic of the gam
+            let targetElement = e.target ;
+            if(targetElement.innerText){
+                return ;
+            }
+            if(turn){
+                targetElement.innerText = "X";
+            }
+            else {
+                targetElement.innerText = "O"
+            }
 
+            let isGameOver = checkIfGameOver();
+            if(isGameOver){
+                message = `${turn ? user1 : user2}, congratulations you won`;
+                messageElement.innerText = message ;
+            }
 
-nameForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const player1 = player1Name.value;
-  const player2 = player2Name.value;
-  if (player1 !== "" && player2 !== "") {
-    message.textContent = `${player1}, you're up!`;
-    currentPlayer = "player1";
-  }
-});
+            turn = !turn;
+            message = `${turn ? user2 : user1}, you're up` ;
+            messageElement.innerText = message; 
+        }
+
+        for(let i = 0 ; i < 9; i++){
+            let id = (i+1).toString();
+            let gridItem = document.getElementById(id);
+
+            gridItem.addEventListener("click", onClickCell)
+        }
 
 
 					

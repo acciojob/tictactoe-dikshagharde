@@ -1,8 +1,33 @@
 /*  your css code here. If applicable */
 /*  your css code here. If applicable */
 /*  your css code here. If applicable */
-#submit{
-    background-color: black;
-    color: white;
-    margin-top: 10px;
-}
+/*  your css code here. If applicable */
+.container {
+            width: 32vw ;
+            margin: auto;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .grid{
+            display: grid;
+            gap: 5px;
+            height: 32vw;
+            background-color: black;
+            grid-template-columns: repeat(3, auto);
+            grid-template-rows: repeat(3, auto);
+        }
+        .grid > div {
+            background-color: tomato;
+            font-size: 40px;
+            width: 10vw;
+            height: 10vw;
+        }
+        h1{
+            text-align: center;
+        }
+        #game-container {
+            display: none;
+        }
