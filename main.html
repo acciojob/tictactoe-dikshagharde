@@ -7,33 +7,40 @@
 </head>
 
 <body>
-	<!-- the entire body must be written by student -->
-	<div class="container">
-        <form>
-            <input type="text" id="player-1" required name="user1" placeholder="Enter Name">
-            <input type="text" id="player-2" required name="user2" placeholder="Enter Name">
-            <input type="submit" value="Start Game">
-        </form>
-        <div id="game-container">
-            <h1>Tic Tac Toe</h1>
-            <div id="message"></div>
-            <div class="grid">
-                <div id="1"></div>
-                <div id="2"></div>
-                <div id="3"></div>
-                <div id="4"></div>
-                <div id="5"></div>
-                <div id="6"></div>
-                <div id="7"></div>
-                <div id="8"></div>
-                <div id="9"></div>
-            </div>
+ <div class="container">
+      <form>
+        <label for="player-1">Player 1:</label>
+        <input type="text" id="player-1" required><br><br>
+
+        <label for="player-2">Player 2:</label>
+        <input type="text" id="player-2" required><br><br>
+
+        <button type="submit" id="submit">Start Game</button>
+      </form>
+
+      <div id="board" style="display:none">
+        <h1>Tic Tac Toe</h1>
+
+        <div class="message"></div>
+
+        <div class="board">
+          <div class="cell" id="1"></div>
+          <div class="cell" id="2"></div>
+          <div class="cell" id="3"></div>
+          <div class="cell" id="4"></div>
+          <div class="cell" id="5"></div>
+          <div class="cell" id="6"></div>
+          <div class="cell" id="7"></div>
+          <div class="cell" id="8"></div>
+          <div class="cell" id="9"></div>
         </div>
+      </div>
     </div>
+
+	<!-- the entire body must be written by student -->
     <script type="text/javascript" src="./script.js">
 </script>
 
 </body>
 
 </html>
-
